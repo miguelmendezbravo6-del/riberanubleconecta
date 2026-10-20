@@ -1,0 +1,54 @@
+services:
+  ribera:
+    build: .
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 3000
+      DB_PATH: /data/ribera.sqlite
+      SETUP_SECRET: ${SETUP_SECRET:?Definir secreto largo}
+      ALLOWED_ORIGIN: https://${APP_DOMAIN:?Definir dominio}
+      TRUST_PROXY: 'true'
+      AUTO_REMINDERS: 'true'
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+      VAPID_SUBJECT: ${VAPID_SUBJECT:-}
+      FCM_SERVICE_ACCOUNT_JSON_B64: ${FCM_SERVICE_ACCOUNT_JSON_B64:-}
+    volumes:
+      - ribera_data:/data
+    expose:
+      - '3000'
+  backup:
+    build: .
+    restart: unless-stopped
+    command: ['node', 'scripts/backup-loop.mjs']
+    environment:
+      DB_PATH: /data/ribera.sqlite
+      BACKUP_DIR: /backups
+      BACKUP_KEEP: ${BACKUP_KEEP:-14}
+      BACKUP_INTERVAL_HOURS: ${BACKUP_INTERVAL_HOURS:-24}
+    volumes:
+      - ribera_data:/data
+      - ribera_backups:/backups
+    depends_on:
+      - ribera
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN:?Definir dominio}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - ribera
+volumes:
+  ribera_data:
+  ribera_backups:
+  caddy_data:
+  caddy_config:

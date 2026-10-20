@@ -1,0 +1,37 @@
+{
+  "name": "la-ribera-de-nuble-conecta",
+  "version": "5.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server/server.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "backup": "node scripts/backup.mjs",
+    "backup:rotate": "node scripts/backup-rotate.mjs",
+    "backup:verify": "node scripts/verify-backup.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "android": "cap run android",
+    "sync": "cap sync android",
+    "configure:mobile": "node scripts/configure-mobile.mjs",
+    "check:release": "node scripts/release-check.mjs",
+    "check:firebase": "node scripts/validate-firebase-android.mjs",
+    "check:firebase:pair": "node scripts/validate-firebase-pair.mjs",
+    "check:audit": "node scripts/audit-release.mjs",
+    "check:deployment": "node scripts/deployment-preflight.mjs",
+    "check:android-build": "node scripts/check-android-build.mjs",
+    "backup:loop": "node scripts/backup-loop.mjs",
+    "backup:restore": "node scripts/restore-backup.mjs"
+  },
+  "dependencies": {
+    "@capacitor/core": "^7.4.0",
+    "@capacitor/android": "^7.4.0",
+    "web-push": "^3.6.7",
+    "@capacitor/push-notifications": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.0"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  }
+}

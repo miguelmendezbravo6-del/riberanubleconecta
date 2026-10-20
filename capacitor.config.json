@@ -1,0 +1,12 @@
+{
+  "appId": "cl.riberadenuble.conecta",
+  "appName": "La Ribera de Ñuble Conecta",
+  "webDir": "www",
+  "server": {
+    "url": "https://REEMPLAZAR-CON-TU-DOMINIO-HTTPS",
+    "cleartext": false
+  },
+  "android": {
+    "allowMixedContent": false
+  }
+}

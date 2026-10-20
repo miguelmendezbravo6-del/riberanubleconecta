@@ -1,0 +1,12 @@
+node_modules/
+android/
+server/*.sqlite
+server/*.sqlite-*
+.env
+*.keystore
+*.jks
+backups/
+.DS_Store
+*service-account*.json
+*firebase-admin*.json
+google-services.json

@@ -1,0 +1,6 @@
+{$APP_DOMAIN} {
+    encode zstd gzip
+    reverse_proxy ribera:3000 {
+        header_up X-Forwarded-Proto https
+    }
+}

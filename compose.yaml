@@ -1,0 +1,19 @@
+services:
+  ribera:
+    build: .
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 3000
+      DB_PATH: /data/ribera.sqlite
+      SETUP_SECRET: ${SETUP_SECRET:?Definir secreto largo}
+      ALLOWED_ORIGIN: ${ALLOWED_ORIGIN:?Definir origen HTTPS}
+      TRUST_PROXY: 'true'
+      AUTO_REMINDERS: 'true'
+    volumes:
+      - ribera_data:/data
+    ports:
+      - '127.0.0.1:3000:3000'
+volumes:
+  ribera_data:

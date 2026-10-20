@@ -1,0 +1,12 @@
+# Activar push nativo en producción:
+# docker compose -f compose.https.yaml -f compose.fcm.yaml up -d --build
+# FCM_SERVICE_ACCOUNT_SOURCE apunta a un JSON PRIVADO, fuera del repositorio.
+services:
+  ribera:
+    environment:
+      FCM_SERVICE_ACCOUNT_FILE: /run/secrets/fcm_service_account
+    secrets:
+      - fcm_service_account
+secrets:
+  fcm_service_account:
+    file: ${FCM_SERVICE_ACCOUNT_SOURCE:?Indicar ruta absoluta al JSON privado de Firebase}
